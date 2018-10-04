@@ -38,8 +38,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import java.util.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,6 +61,11 @@ class MainActivity : AppCompatActivity() {
     // Set up the ViewPager with the sections adapter.
     container.adapter = mNumbersPagerAdapter
 
+    fab.setOnClickListener {
+      val luckyNumber = (0..numbers.size).random()
+      Toast.makeText(this, "Your lucky number is ${numbers[luckyNumber]}",
+          Toast.LENGTH_LONG).show()
+    }
   }
 
   inner class NumbersPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
@@ -102,4 +109,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
   }
+
+  private fun IntRange.random() =
+      Random().nextInt((endInclusive + 1) - start) + start
 }
